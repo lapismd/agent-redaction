@@ -13,6 +13,7 @@ it("sanitizes before a synchronous sink observes its first value", () => {
     expect(writes[0]?.includes(secret)).toBe(false);
     expect(writes[0]?.includes("/private/test")).toBe(false);
     expect(Object.isFrozen(result)).toBe(true);
+    expect(scope.path("/private/test/workspace/README")).toMatchObject({ status: "sanitized", value: { kind: "workspace", workspaceId: "probe", relativePath: "README", resolvable: true } });
     expect(scope.registerSecrets(["rotated-sync-canary-432"])).toBe(true);
     expect(scope.text("rotated-sync-canary-432")).toMatchObject({ value: "[REDACTED]" });
     let touched = false;

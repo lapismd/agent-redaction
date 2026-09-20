@@ -1,5 +1,5 @@
 import { Worker } from "node:worker_threads";
-import { LIMITS, omit, utf8Size, type Json, type Policy, type Result } from "./types.js";
+import { LIMITS, omit, utf8Size, type Json, type Policy, type Result, type LogicalPath } from "./types.js";
 
 /** Clone only plain DTO data before structured-clone could invoke accessors. */
 function snapshot(input: unknown): Json {
@@ -41,7 +41,7 @@ export class SynchronousRedaction {
     if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 60_000) throw new Error("policy_invalid");
   }
   get policyId(): string { return `agent-redaction/1/${this.policy.destination ?? "public"}/secretlint-13.0.5-explicit-27-v1`; }
-  #call(operation: "text" | "value" | "register", input: unknown): unknown {
+  #call(operation: "text" | "value" | "register" | "path", input: unknown): unknown {
     if (this.#closed) return omit("policy_invalid");
     let safeInput: Json;
     try { safeInput = snapshot(input); } catch { return omit("invalid_input"); }
@@ -63,6 +63,7 @@ export class SynchronousRedaction {
   }
   text(value: string): Result<string> { return this.#call("text", value) as Result<string>; }
   value(value: unknown): Result<Json> { return this.#call("value", value) as Result<Json>; }
+  path(value: string): Result<LogicalPath> { return this.#call("path", value) as Result<LogicalPath>; }
   registerSecrets(values: readonly string[]): boolean { const result = this.#call("register", values); if (result !== true) { this.dispose(); return false; } return true; }
   dispose(): void { this.#closed = true; void this.#worker?.terminate(); this.#worker = undefined; }
 }

@@ -52,7 +52,7 @@ export function createNodeDetector(timeoutMs = 10_000): NodeDetector {
 
 export interface SecretGrants { readonly environment?: readonly string[]; readonly dotenvFiles?: readonly string[] }
 /** Only explicit names and canonical paths are read. No directory discovery. */
-export async function refreshNodeSecrets(scope: RedactionScope, grants: SecretGrants, environment: Readonly<Record<string, string | undefined>> = process.env): Promise<boolean> {
+export async function refreshNodeSecrets(scope: Pick<RedactionScope, "registerSecrets" | "dispose">, grants: SecretGrants, environment: Readonly<Record<string, string | undefined>> = process.env): Promise<boolean> {
   const values: string[] = [];
   try {
     if ((grants.environment?.length ?? 0) + (grants.dotenvFiles?.length ?? 0) > LIMITS.secrets) throw 0;

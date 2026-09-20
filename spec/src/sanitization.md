@@ -32,6 +32,10 @@ strings are reserved; a known value colliding with them invalidates the scope.
 No mapping is exported with the result. Encoded matching covers URI component,
 JSON-escaped, UTF-8 base64 and base64url representations, not arbitrary encodings.
 
+Re-exporting a private portable view under public policy MUST remove `$HOME` and
+`$TMP` suffixes as well as original non-workspace roots. Synchronous boundaries
+expose the same structured `LogicalPath` classification as asynchronous scopes.
+
 Only complete text and plain data objects are supported. Binary attachments and
 opaque transport data must be represented by an omission by the caller. No
 incremental release guarantee is claimed. A scanner deadline may omit a block;

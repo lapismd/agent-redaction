@@ -113,6 +113,9 @@ describe("portable paths", () => {
   it("retains only private portable suffixes", async () => {
     expect(await getText(make("private-portable"), "/Users/test/private /tmp/cache")).toBe("$HOME/private $TMP/cache");
   });
+  it("removes private portable suffixes when projecting for public sharing", async () => {
+    expect(await getText(make(), "$HOME/private/file $TMP/cache $WORKSPACE[one]/README")).toBe("[EXTERNAL_PATH] [EXTERNAL_PATH] $WORKSPACE[one]/README");
+  });
   it("preserves web routes and already-portable paths", async () => {
     const text = "https://example.test/api/users $WORKSPACE[one]/README";
     expect(await getText(make(), text)).toBe(text);

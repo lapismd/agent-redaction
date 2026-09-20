@@ -52,6 +52,7 @@ export class PathRegistry {
     return external();
   }
   text(value: string): string {
+    if (this.#public) value = value.replace(/\$(?:HOME|TMP)(?:[\\/][^\s<>"'`,;)]*)?/g, EXTERNAL);
     // Skip web URLs as complete tokens; they are not local path capabilities.
     const trusted = this.#roots.map(root => escape(root.path).replace(/\//g, "[\\\\/]")).join("|");
     const candidate = `https?:\\/\\/[^\\s<>\"'\x60]+|file:\\/\\/[^\\s<>\"'\x60]+|(?:${trusted || "(?!)"})(?:[\\\\/][^\\s<>\"'\x60,;)]*)?|[A-Za-z]:[\\\\/][^\\s<>\"'\x60,;)]*|\\\\\\\\[^\\s<>\"'\x60,;)]*|\\/(?:[^\\s/<>\"'\x60,;)]*\\/)+[^\\s<>\"'\x60,;)]*`;
