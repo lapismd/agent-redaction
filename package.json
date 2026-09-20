@@ -1,0 +1,81 @@
+{
+  "name": "@lapismd/agent-redaction",
+  "version": "0.1.0",
+  "description": "Portable fail-closed agent transcript sanitization",
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.js"
+    },
+    "./deno": {
+      "types": "./dist/deno.d.ts",
+      "import": "./dist/deno.js"
+    },
+    "./secretlint": {
+      "types": "./dist/secretlint.d.ts",
+      "import": "./dist/secretlint.js"
+    }
+  },
+  "scripts": {
+    "check": "tsc --noEmit && node scripts/check-boundaries.mjs",
+    "test": "pnpm build && vitest run",
+    "build": "tsc",
+    "test:deno": "deno test --allow-read --allow-env --allow-sys scripts/deno.test.ts",
+    "spec:check": "spec-validator check",
+    "publint": "publint"
+  },
+  "dependencies": {
+    "@secretlint/core": "13.0.5",
+    "@secretlint/types": "13.0.5",
+    "dotenv": "17.3.1",
+    "@secretlint/secretlint-rule-aws": "13.0.5",
+    "@secretlint/secretlint-rule-gcp": "13.0.5",
+    "@secretlint/secretlint-rule-privatekey": "13.0.5",
+    "@secretlint/secretlint-rule-npm": "13.0.5",
+    "@secretlint/secretlint-rule-basicauth": "13.0.5",
+    "@secretlint/secretlint-rule-slack": "13.0.5",
+    "@secretlint/secretlint-rule-sendgrid": "13.0.5",
+    "@secretlint/secretlint-rule-shopify": "13.0.5",
+    "@secretlint/secretlint-rule-stripe": "13.0.5",
+    "@secretlint/secretlint-rule-github": "13.0.5",
+    "@secretlint/secretlint-rule-gitlab": "13.0.5",
+    "@secretlint/secretlint-rule-grafana": "13.0.5",
+    "@secretlint/secretlint-rule-openai": "13.0.5",
+    "@secretlint/secretlint-rule-anthropic": "13.0.5",
+    "@secretlint/secretlint-rule-groq": "13.0.5",
+    "@secretlint/secretlint-rule-huggingface": "13.0.5",
+    "@secretlint/secretlint-rule-linear": "13.0.5",
+    "@secretlint/secretlint-rule-notion": "13.0.5",
+    "@secretlint/secretlint-rule-1password": "13.0.5",
+    "@secretlint/secretlint-rule-database-connection-string": "13.0.5",
+    "@secretlint/secretlint-rule-hashicorp-vault": "13.0.5",
+    "@secretlint/secretlint-rule-vercel": "13.0.5",
+    "@secretlint/secretlint-rule-databricks": "13.0.5",
+    "@secretlint/secretlint-rule-docker": "13.0.5",
+    "@secretlint/secretlint-rule-figma": "13.0.5",
+    "@secretlint/secretlint-rule-cloudflare": "13.0.5",
+    "@secretlint/secretlint-rule-tailscale": "13.0.5"
+  },
+  "devDependencies": {
+    "@lapismd/spec-validator": "^0.1.0",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0",
+    "publint": "^0.3.12"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "packageManager": "pnpm@10.32.1"
+}

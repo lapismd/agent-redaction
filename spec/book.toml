@@ -1,0 +1,8 @@
+[book]
+title = "Agent Redaction Specification"
+authors = ["LapisMD contributors"]
+language = "en"
+src = "src"
+[build]
+build-dir = "book"
+create-missing = false
