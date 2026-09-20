@@ -36,3 +36,9 @@ Native JJ/Git objects, external provider traffic, external agent journals,
 arbitrary binary attachments, and standalone Rust marks remain separate
 boundaries. Sanitized patches and command representations must never be replayed
 as executable inputs. Do not report previously stored or published copies erased.
+
+`SynchronousRedaction` is for synchronous durable-store adapters. It runs the
+same scanner in a worker and waits on a bounded shared result buffer, with a
+deadline independent of the calling event loop. Ordinary event capture should
+use the async factory. The first call starts the worker; subsequent calls reuse
+it. Only completed sanitized results cross back to the writing thread.

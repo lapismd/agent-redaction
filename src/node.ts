@@ -3,6 +3,7 @@ import { open, realpath } from "node:fs/promises";
 import { parse } from "dotenv";
 import { RedactionScope } from "./sanitizer.js";
 import { LIMITS, type Detector, type Policy, type Span } from "./types.js";
+export { SynchronousRedaction } from "./sync.js";
 
 export interface NodeDetector extends Detector { dispose(): void }
 /** Explicit construction starts an isolated scanner. No worker starts on import. */

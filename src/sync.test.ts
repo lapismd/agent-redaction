@@ -1,0 +1,27 @@
+import { expect, it } from "vitest";
+import { SynchronousRedaction } from "../dist/node.js";
+
+it("sanitizes before a synchronous sink observes its first value", () => {
+  const secret = "synthetic-sync-canary-982";
+  const scope = new SynchronousRedaction({ secrets: [secret], roots: [{ kind: "workspace", id: "probe", path: "/private/test/workspace" }] });
+  try {
+    const writes: string[] = [];
+    const result = scope.value({ text: `${secret}\n/private/test/workspace/README` });
+    expect(result.status).toBe("sanitized");
+    if (result.status === "sanitized") writes.push(JSON.stringify(result.value));
+    expect(writes).toHaveLength(1);
+    expect(writes[0]?.includes(secret)).toBe(false);
+    expect(writes[0]?.includes("/private/test")).toBe(false);
+    expect(Object.isFrozen(result)).toBe(true);
+    expect(scope.registerSecrets(["rotated-sync-canary-432"])).toBe(true);
+    expect(scope.text("rotated-sync-canary-432")).toMatchObject({ value: "[REDACTED]" });
+    let touched = false;
+    expect(scope.value({ get text() { touched = true; return secret; } }).status).toBe("omitted");
+    expect(touched).toBe(false);
+  } finally { scope.dispose(); }
+});
+it("synchronous deadlines fail closed without waiting on the blocked event loop", () => {
+  const scope = new SynchronousRedaction({}, 1);
+  try { expect(scope.text("private input")).toEqual({ status: "omitted", reason: "detector_failure" }); }
+  finally { scope.dispose(); }
+});

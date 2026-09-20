@@ -11,6 +11,7 @@
 | AR-STREAM-001 | Implemented | src/sanitizer.test.ts every UTF-8 split; src/corpus.test.ts cancellation |
 | AR-ADAPTER-001 | Implemented | src/adapters.test.ts; scripts/deno.test.ts |
 | AR-ADAPTER-002 | Implemented | src/adapters.test.ts grants and rotation; scripts/deno.test.ts |
+| AR-ADAPTER-003 | Implemented | src/sync.test.ts first-write and deadline checks; scripts/deno.test.ts |
 | AR-PKG-001 | Implemented | scripts/check-boundaries.mjs; pnpm publint |
 | AR-GOV-001 | Implemented | pnpm spec:check |
 | AR-GOV-002 | Implemented | pnpm spec:check |
