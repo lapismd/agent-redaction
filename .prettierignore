@@ -1,0 +1,8 @@
+node_modules
+dist
+spec/book
+pnpm-lock.yaml
+.jj
+coverage
+.local
+scripts/architecture-fixtures

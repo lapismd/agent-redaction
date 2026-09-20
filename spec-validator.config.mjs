@@ -38,23 +38,44 @@ export default defineConfig(tableRequirements(), {
     book: true,
     specFirst: {
       mode: "mapped",
-      canonicalPattern: "^spec/src/(?:sanitization|spec-governance)\\.md$",
-      ignore: ["(^|/)node_modules/", "^dist/", "^spec/book/", "\\.test\\.ts$"],
+      canonicalPattern:
+        "^spec/src/(?:sanitization|spec-governance|architecture)\\.md$",
+      ignore: [
+        "(^|/)node_modules/",
+        "^dist/",
+        "^spec/book/",
+        "\\.(?:test)\\.(?:ts|mjs)$",
+      ],
       protected: [
-        "^(?:src/|scripts/|docs/|package\\.json$|deno\\.json$|AGENTS\\.md$|spec-validator\\.config\\.mjs$|spec/book\\.toml$|\\.gitignore$)",
+        "^(?:src/|scripts/|docs/|package\\.json$|deno\\.json$|AGENTS\\.md$|spec-validator\\.config\\.mjs$|spec/book\\.toml$|\\.gitignore$|\\.prettierrc\\.json$|\\.prettierignore$)",
       ],
       rules: [
         {
-          pattern: "^(?:src/|scripts/|docs/|package\\.json$|deno\\.json$)",
+          pattern:
+            "^(?:src/|scripts/check-boundaries\\.mjs$|scripts/deno\\.test\\.ts$|docs/|package\\.json$|deno\\.json$)",
           chapters: ["spec/src/sanitization.md"],
         },
         {
+          pattern: "^scripts/(?:check-architecture\\.mjs$|architecture)",
+          chapters: ["spec/src/architecture.md"],
+        },
+        {
           pattern:
-            "^(?:AGENTS\\.md$|spec-validator\\.config\\.mjs$|spec/book\\.toml$|\\.gitignore$)",
+            "^(?:AGENTS\\.md$|spec-validator\\.config\\.mjs$|spec/book\\.toml$|\\.gitignore$|\\.prettierrc\\.json$|\\.prettierignore$)",
           chapters: ["spec/src/spec-governance.md"],
         },
       ],
     },
   },
-  check: { build: true, first: true },
+  check: {
+    build: true,
+    first: true,
+    lanes: [
+      {
+        name: "architecture",
+        command: "node",
+        args: ["scripts/check-architecture.mjs"],
+      },
+    ],
+  },
 });

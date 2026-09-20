@@ -28,7 +28,10 @@
     }
   },
   "scripts": {
-    "check": "tsc --noEmit && node scripts/check-boundaries.mjs",
+    "fmt": "prettier . --write --log-level warn",
+    "check:format": "prettier . --check --log-level warn",
+    "check:architecture": "node scripts/check-architecture.mjs",
+    "check": "pnpm check:format && tsc --noEmit && node scripts/check-boundaries.mjs && pnpm check:architecture",
     "test": "pnpm build && vitest run",
     "build": "tsc",
     "test:deno": "deno test --allow-read --allow-env --allow-sys scripts/deno.test.ts",
@@ -71,6 +74,7 @@
   "devDependencies": {
     "@lapismd/spec-validator": "^0.1.0",
     "@types/node": "^24.0.0",
+    "prettier": "3.3.3",
     "publint": "^0.3.12",
     "typescript": "^5.9.3",
     "vitest": "^4.1.0"
