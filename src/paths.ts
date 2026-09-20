@@ -55,10 +55,10 @@ export class PathRegistry {
     if (this.#public) value = value.replace(/\$(?:HOME|TMP)(?:[\\/][^\s<>"'`,;)]*)?/g, EXTERNAL);
     // Skip web URLs as complete tokens; they are not local path capabilities.
     const trusted = this.#roots.map(root => escape(root.path).replace(/\//g, "[\\\\/]")).join("|");
-    const candidate = `https?:\\/\\/[^\\s<>\"'\x60]+|file:\\/\\/[^\\s<>\"'\x60]+|(?:${trusted || "(?!)"})(?:[\\\\/][^\\s<>\"'\x60,;)]*)?|[A-Za-z]:[\\\\/][^\\s<>\"'\x60,;)]*|\\\\\\\\[^\\s<>\"'\x60,;)]*|\\/(?:[^\\s/<>\"'\x60,;)]*\\/)+[^\\s<>\"'\x60,;)]*`;
+    const candidate = `(?:https?|wss?):\\/\\/[^\\s<>\"'\x60]+|file:\\/\\/[^\\s<>\"'\x60]+|(?:${trusted || "(?!)"})(?:[\\\\/][^\\s<>\"'\x60,;)]*)?|[A-Za-z]:[\\\\/][^\\s<>\"'\x60,;)]*|\\\\\\\\[^\\s<>\"'\x60,;)]*|\\/(?:[^\\s/<>\"'\x60,;)]*\\/)+[^\\s<>\"'\x60,;)]*`;
     const regex = new RegExp(candidate, "gi");
     return value.replace(regex, (match: string, offset: number) => {
-      if (/^https?:\/\//i.test(match)) return match;
+      if (/^(?:https?|wss?):\/\//i.test(match)) return match;
       // Do not match inside identifiers, URLs or already-portable placeholders.
       const before = value.slice(0, offset);
       if (offset > 0 && /[\w\/$\]]$/.test(before)) return match;

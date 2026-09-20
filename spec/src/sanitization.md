@@ -44,3 +44,5 @@ Only complete text and plain data objects are supported. Binary attachments and
 opaque transport data must be represented by an omission by the caller. No
 incremental release guarantee is claimed. A scanner deadline may omit a block;
 Node enforcement isolates scanning in a worker so it can terminate the scan.
+
+Network URL tokens, including WebSocket relay URLs, are excluded from filesystem path matching. Destination metadata policy remains consumer-owned.

@@ -55,3 +55,9 @@ describe("protected representations", () => {
     }
   });
 });
+
+it("does not reinterpret WebSocket relay URLs as filesystem paths", async () => {
+  const urls = "wss://relay.example/channel ws://127.0.0.1:1234/path";
+  const result = await scope().text(urls);
+  expect(result.status === "sanitized" && result.value).toBe(urls);
+});
