@@ -30,7 +30,7 @@ it("keeps the durable boundary healthy over a journal replay sized burst", () =>
   const scope = new SynchronousRedaction();
   try {
     for (let index = 0; index < 1500; index++) {
-      expect(scope.value({ index })).toMatchObject({ status: "sanitized", value: { index } });
+      expect(scope.value({ index, id: "90cf149a-5927-41cd-b0f3-0059464285ab", provider: "fake", workspace: "root", owner: "owner", payloadPolicy: "durable", createdAt: 178990241, memoryEndpoint: "memory", version: 1, contextSources: ["context.test"] })).toMatchObject({ status: "sanitized", value: { index } });
     }
   } finally { scope.dispose(); }
 }, 30_000);

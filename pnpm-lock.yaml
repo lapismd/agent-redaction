@@ -11,6 +11,9 @@ importers:
       '@secretlint/core':
         specifier: 13.0.5
         version: 13.0.5
+      '@secretlint/profiler':
+        specifier: 13.0.5
+        version: 13.0.5
       '@secretlint/secretlint-rule-1password':
         specifier: 13.0.5
         version: 13.0.5

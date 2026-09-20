@@ -37,6 +37,8 @@ Re-exporting a private portable view under public policy MUST remove `$HOME` and
 expose the same structured `LogicalPath` classification as asynchronous scopes.
 The synchronous adapter reuses one bounded result buffer per scope; repeated
 small records MUST NOT allocate an additional maximum-sized buffer per call.
+The enforcement adapter MUST disable Secretlint profiling through its public API
+before scanning, so rule timing entries do not grow with private record traffic.
 
 Only complete text and plain data objects are supported. Binary attachments and
 opaque transport data must be represented by an omission by the caller. No
