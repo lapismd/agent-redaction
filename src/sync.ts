@@ -37,6 +37,7 @@ function freeze<T>(value: T): T {
 export class SynchronousRedaction {
   #worker?: Worker;
   #closed = false;
+  readonly #buffer = new SharedArrayBuffer(LIMITS.record + 4104);
   constructor(private readonly policy: Omit<Policy, "detector"> = {}, private readonly timeoutMs = 10_000) {
     if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 60_000) throw new Error("policy_invalid");
   }
@@ -52,8 +53,10 @@ export class SynchronousRedaction {
         this.#worker.on("error", () => this.dispose());
         this.#worker.unref();
       }
-      const buffer = new SharedArrayBuffer(LIMITS.record + 4104);
+      const buffer = this.#buffer;
       const state = new Int32Array(buffer, 0, 2);
+      Atomics.store(state, 0, 0);
+      Atomics.store(state, 1, 0);
       this.#worker.postMessage({ operation, input: safeInput, buffer });
       if (Atomics.wait(state, 0, 0, this.timeoutMs) === "timed-out" || Atomics.load(state, 0) !== 1) {
         this.dispose(); return omit("detector_failure");

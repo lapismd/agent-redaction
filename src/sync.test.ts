@@ -26,3 +26,11 @@ it("synchronous deadlines fail closed without waiting on the blocked event loop"
   try { expect(scope.text("private input")).toEqual({ status: "omitted", reason: "detector_failure" }); }
   finally { scope.dispose(); }
 });
+it("keeps the durable boundary healthy over a journal replay sized burst", () => {
+  const scope = new SynchronousRedaction();
+  try {
+    for (let index = 0; index < 1500; index++) {
+      expect(scope.value({ index })).toMatchObject({ status: "sanitized", value: { index } });
+    }
+  } finally { scope.dispose(); }
+}, 30_000);

@@ -35,6 +35,8 @@ JSON-escaped, UTF-8 base64 and base64url representations, not arbitrary encoding
 Re-exporting a private portable view under public policy MUST remove `$HOME` and
 `$TMP` suffixes as well as original non-workspace roots. Synchronous boundaries
 expose the same structured `LogicalPath` classification as asynchronous scopes.
+The synchronous adapter reuses one bounded result buffer per scope; repeated
+small records MUST NOT allocate an additional maximum-sized buffer per call.
 
 Only complete text and plain data objects are supported. Binary attachments and
 opaque transport data must be represented by an omission by the caller. No
