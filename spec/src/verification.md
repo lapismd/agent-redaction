@@ -12,6 +12,7 @@
 | AR-ADAPTER-001 | Implemented | src/adapters.test.ts; scripts/deno.test.ts                                            |
 | AR-ADAPTER-002 | Implemented | src/adapters.test.ts grants and rotation; scripts/deno.test.ts                        |
 | AR-ADAPTER-003 | Implemented | src/sync.test.ts first-write and deadline checks; scripts/deno.test.ts                |
+| AR-ADAPTER-004 | Implemented | src/stdio.test.ts bounded stdin, sanitization and secret-free process output          |
 | AR-PKG-001     | Implemented | scripts/check-boundaries.mjs; pnpm publint                                            |
 | AR-ARCH-001    | Implemented | scripts/architecture.test.mjs; pnpm check:architecture                                |
 | AR-GOV-001     | Implemented | pnpm spec:check                                                                       |

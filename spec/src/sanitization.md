@@ -19,6 +19,7 @@ exfiltration through unrelated messages or external agent software.
 | AR-ADAPTER-001 | Secretlint MUST use pinned 13.0.5 rules with an explicit inventory excluding comment suppression. No repository configuration discovery, raw diagnostics, network validation or source logging is permitted. Portable exports MUST report detector coverage honestly.                                                           |
 | AR-ADAPTER-002 | Environment and dotenv discovery MUST require explicit grants and happen only on an explicit call. Refresh MUST be atomic, bounded and retain rotated values. Node and Deno enforcement MUST be tested separately.                                                                                                              |
 | AR-ADAPTER-003 | Synchronous durable-store boundaries MAY use an isolated worker and bounded shared result buffer. They MUST use the same complete-block policy, reject executable input objects before worker transfer, enforce a deadline without depending on the caller event loop, and return immutable sanitized data or a fixed omission. |
+| AR-ADAPTER-004 | The Node package executable MUST accept one bounded versioned JSON request on stdin, emit only a sanitized result or fixed omission on stdout, keep stderr empty, and never discover policy, credentials or source files implicitly.                                                                                            |
 | AR-PKG-001     | Portable exports MUST NOT depend on a runtime, controller, signer, relay, database or native VCS. Published dependencies MUST use registry versions.                                                                                                                                                                            |
 
 Local `pnpm check` also runs Prettier formatting and counted-line architecture
@@ -47,5 +48,12 @@ Only complete text and plain data objects are supported. Binary attachments and
 opaque transport data must be represented by an omission by the caller. No
 incremental release guarantee is claimed. A scanner deadline may omit a block;
 Node enforcement isolates scanning in a worker so it can terminate the scan.
+
+The `lapismd-agent-redaction` executable is a transport adapter around the same
+Node scope. Its version-1 request carries one JSON `value` and optional explicit
+`secrets`, `roots` and destination policy. Input is capped at six MiB so a
+four-MiB record plus bounded policy can be admitted without incremental output.
+Malformed, oversized, unsupported or detector-failed input produces only the
+fixed omission contract; source data and diagnostics never reach stderr.
 
 Network URL tokens, including WebSocket relay URLs, are excluded from filesystem path matching. Destination metadata policy remains consumer-owned.

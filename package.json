@@ -4,6 +4,9 @@
   "description": "Portable fail-closed agent transcript sanitization",
   "type": "module",
   "license": "Apache-2.0",
+  "bin": {
+    "lapismd-agent-redaction": "./dist/stdio.js"
+  },
   "files": [
     "dist",
     "README.md",
