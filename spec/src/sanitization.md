@@ -10,6 +10,10 @@ tarball between GitHub jobs, and publishes through npm trusted publishing from
 the protected `npm-production` environment. Initial package creation remains
 an interactive npm bootstrap gate; CI must fail closed until the package exists.
 
+The public README documents the installed package's portable, Node, Deno and
+stdin adapters. The separate specification workflow publishes the canonical
+contract without publishing npm artifacts or processing user capture data.
+
 ## Requirements
 
 | ID             | Requirement                                                                                                                                                                                                                                                                                                                     |

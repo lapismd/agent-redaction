@@ -2,12 +2,18 @@
 
 ## Requirements
 
-| ID         | Requirement                                                                                                                                                                               |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| AR-GOV-001 | Canonical chapters MUST be listed in SUMMARY.md and build with mdBook. Generated output MUST be ignored.                                                                                  |
-| AR-GOV-002 | Protected changes MUST update the mapped canonical chapter before or with code.                                                                                                           |
-| AR-GOV-003 | Every requirement MUST have exactly one verification row distinguishing implemented and planned evidence.                                                                                 |
-| AR-GOV-004 | Repository validation MUST include Prettier formatting through `pnpm check:format`. The check MUST use the repository Prettier configuration and MUST fail on unformatted tracked source. |
+The public README uses only declared package exports. The independent
+`publish-spec-pages.yml` workflow builds the canonical book without installing
+runtime dependencies, so spec publication does not depend on npm release gates.
+
+| ID         | Requirement                                                                                                                                                                                                                   |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AR-GOV-001 | Canonical chapters MUST be listed in SUMMARY.md and build with mdBook. Generated output MUST be ignored.                                                                                                                      |
+| AR-GOV-002 | Protected changes MUST update the mapped canonical chapter before or with code.                                                                                                                                               |
+| AR-GOV-003 | Every requirement MUST have exactly one verification row distinguishing implemented and planned evidence.                                                                                                                     |
+| AR-GOV-004 | Repository validation MUST include Prettier formatting through `pnpm check:format`. The check MUST use the repository Prettier configuration and MUST fail on unformatted tracked source.                                     |
+| AR-GOV-005 | The README MUST document registry installation, public runtime imports, safe result handling, explicit secret grants, disposal, complete-block capture, and the published specification.                                      |
+| AR-GOV-006 | GitHub Actions MUST build canonical `spec/src` with mdBook on specification pull requests and publish the generated book to GitHub Pages only from `main`, including manual dispatch. Generated output MUST remain untracked. |
 
 ## Change map
 

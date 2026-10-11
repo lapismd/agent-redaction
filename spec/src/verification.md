@@ -20,3 +20,5 @@
 | AR-GOV-002     | Implemented | pnpm spec:check                                                                                                                                                          |
 | AR-GOV-003     | Implemented | pnpm spec:check                                                                                                                                                          |
 | AR-GOV-004     | Implemented | pnpm check:format                                                                                                                                                        |
+| AR-GOV-005     | Implemented | README.md; public-export example compilation; package checks                                                                                                             |
+| AR-GOV-006     | Implemented | .github/workflows/publish-spec-pages.yml; mdbook build spec; actionlint                                                                                                  |
