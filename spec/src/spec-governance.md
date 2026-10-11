@@ -16,3 +16,7 @@
 | `src/`, `scripts/check-boundaries.mjs`, `scripts/deno.test.ts`, `package.json`, `deno.json`, `docs/`            | `sanitization.md`    |
 | `scripts/check-architecture.mjs`, `scripts/architecture-*`, `scripts/architecture-fixtures/`                    | `architecture.md`    |
 | `AGENTS.md`, `spec-validator.config.mjs`, `spec/book.toml`, `.gitignore`, `.prettierrc.json`, `.prettierignore` | `spec-governance.md` |
+
+Release helpers, workflow files, and their package scripts map to sanitization
+and AR-PKG-002. Registry lockfile audit updates and the workspace override map
+to this governance chapter. The release checks retain all package assertions.

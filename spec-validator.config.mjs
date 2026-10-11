@@ -47,12 +47,12 @@ export default defineConfig(tableRequirements(), {
         "\\.(?:test)\\.(?:ts|mjs)$",
       ],
       protected: [
-        "^(?:src/|scripts/|docs/|package\\.json$|deno\\.json$|AGENTS\\.md$|spec-validator\\.config\\.mjs$|spec/book\\.toml$|\\.gitignore$|\\.prettierrc\\.json$|\\.prettierignore$)",
+        "^(?:\\.github/|pnpm-|src/|scripts/|docs/|package\\.json$|deno\\.json$|AGENTS\\.md$|spec-validator\\.config\\.mjs$|spec/book\\.toml$|\\.gitignore$|\\.prettierrc\\.json$|\\.prettierignore$)",
       ],
       rules: [
         {
           pattern:
-            "^(?:src/|scripts/check-boundaries\\.mjs$|scripts/deno\\.test\\.ts$|docs/|package\\.json$|deno\\.json$)",
+            "^(?:\\.github/|scripts/npm-release\\.mjs$|src/|scripts/check-boundaries\\.mjs$|scripts/deno\\.test\\.ts$|docs/|package\\.json$|deno\\.json$)",
           chapters: ["spec/src/sanitization.md"],
         },
         {
@@ -61,7 +61,7 @@ export default defineConfig(tableRequirements(), {
         },
         {
           pattern:
-            "^(?:AGENTS\\.md$|spec-validator\\.config\\.mjs$|spec/book\\.toml$|\\.gitignore$|\\.prettierrc\\.json$|\\.prettierignore$)",
+            "^(?:pnpm-|AGENTS\\.md$|spec-validator\\.config\\.mjs$|spec/book\\.toml$|\\.gitignore$|\\.prettierrc\\.json$|\\.prettierignore$)",
           chapters: ["spec/src/spec-governance.md"],
         },
       ],

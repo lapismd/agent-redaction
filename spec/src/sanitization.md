@@ -5,6 +5,11 @@ sanitized representations. It does not change executable arguments or native
 archives. Detectors cannot recognize every secret or prevent adversarial
 exfiltration through unrelated messages or external agent software.
 
+Release automation builds and packs one verified commit, passes the immutable
+tarball between GitHub jobs, and publishes through npm trusted publishing from
+the protected `npm-production` environment. Initial package creation remains
+an interactive npm bootstrap gate; CI must fail closed until the package exists.
+
 ## Requirements
 
 | ID             | Requirement                                                                                                                                                                                                                                                                                                                     |
@@ -21,6 +26,7 @@ exfiltration through unrelated messages or external agent software.
 | AR-ADAPTER-003 | Synchronous durable-store boundaries MAY use an isolated worker and bounded shared result buffer. They MUST use the same complete-block policy, reject executable input objects before worker transfer, enforce a deadline without depending on the caller event loop, and return immutable sanitized data or a fixed omission. |
 | AR-ADAPTER-004 | The Node package executable MUST accept one bounded versioned JSON request on stdin, emit only a sanitized result or fixed omission on stdout, keep stderr empty, and never discover policy, credentials or source files implicitly.                                                                                            |
 | AR-PKG-001     | Portable exports MUST NOT depend on a runtime, controller, signer, relay, database or native VCS. Published dependencies MUST use registry versions.                                                                                                                                                                            |
+| AR-PKG-002     | GitHub release jobs MUST install the frozen registry lockfile, run the package and specification gates, publish the exact checksum-verified tarball through npm OIDC, and verify registry integrity plus provenance in a clean consumer. Initial npm package creation MUST remain an explicit bootstrap gate.                   |
 
 Local `pnpm check` also runs Prettier formatting and counted-line architecture
 budgets; see [architecture.md](architecture.md).

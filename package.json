@@ -39,7 +39,11 @@
     "build": "tsc",
     "test:deno": "deno test --allow-read --allow-env --allow-sys scripts/deno.test.ts",
     "spec:check": "spec-validator check",
-    "publint": "publint"
+    "publint": "publint",
+    "test:release": "node --test scripts/npm-release.test.mjs",
+    "release:prepare": "pnpm build && pnpm publint && node scripts/npm-release.mjs prepare",
+    "release:publish": "node scripts/npm-release.mjs publish",
+    "release:verify": "node scripts/npm-release.mjs verify"
   },
   "dependencies": {
     "@secretlint/core": "13.0.5",
@@ -85,5 +89,12 @@
   "engines": {
     "node": ">=22.13.0"
   },
-  "packageManager": "pnpm@10.32.1"
+  "packageManager": "pnpm@10.32.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lapismd/agent-redaction.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
