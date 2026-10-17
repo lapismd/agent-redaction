@@ -47,12 +47,12 @@ export default defineConfig(tableRequirements(), {
         "\\.(?:test)\\.(?:ts|mjs)$",
       ],
       protected: [
-        "^(?:\\.github/|pnpm-|src/|scripts/|docs/|package\\.json$|deno\\.json$|AGENTS\\.md$|spec-validator\\.config\\.mjs$|spec/book\\.toml$|\\.gitignore$|\\.prettierrc\\.json$|\\.prettierignore$)",
+        "^(?:\\.github/|pnpm-|crates/|Cargo\\.(?:toml|lock)$|rust-toolchain\\.toml$|vitest\\.config\\.ts$|src/|scripts/|docs/|package\\.json$|deno\\.json$|AGENTS\\.md$|spec-validator\\.config\\.mjs$|spec/book\\.toml$|\\.gitignore$|\\.prettierrc\\.json$|\\.prettierignore$)",
       ],
       rules: [
         {
           pattern:
-            "^(?:\\.github/|scripts/npm-release\\.mjs$|src/|scripts/check-boundaries\\.mjs$|scripts/deno\\.test\\.ts$|docs/|package\\.json$|deno\\.json$)",
+            "^(?:\\.github/|scripts/npm-release\\.mjs$|crates/|Cargo\\.(?:toml|lock)$|rust-toolchain\\.toml$|vitest\\.config\\.ts$|src/|scripts/(?:check-boundaries|check-native-boundaries|dev-cargo)\\.mjs$|scripts/deno\\.test\\.ts$|docs/|package\\.json$|deno\\.json$)",
           chapters: ["spec/src/sanitization.md"],
         },
         {

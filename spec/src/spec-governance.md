@@ -26,3 +26,9 @@ runtime dependencies, so spec publication does not depend on npm release gates.
 Release helpers, workflow files, and their package scripts map to sanitization
 and AR-PKG-002. Registry lockfile audit updates and the workspace override map
 to this governance chapter. The release checks retain all package assertions.
+
+Rust `crates/`, `Cargo.toml`, `Cargo.lock` and `rust-toolchain.toml` changes map to
+`sanitization.md`; native package ignores and validator mappings map here.
+
+The native privacy test configuration includes its dependency-boundary regressions
+without changing the existing TypeScript and architecture scenarios.

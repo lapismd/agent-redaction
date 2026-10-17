@@ -16,7 +16,7 @@ export const DEFAULT_LIMITS = {
 
 export const DUMP_NAMES = new Set(["utils", "helpers", "common", "services"]);
 
-const SOURCE_EXT = /\.(?:[cm]?[jt]sx?|svelte)$/u;
+const SOURCE_EXT = /\.(?:[cm]?[jt]sx?|svelte|rs)$/u;
 const TEST_FILE = /\.(?:test|spec)\.[cm]?[jt]sx?$/u;
 const TEST_SPECIFIER = /\.(?:test|spec)(?:\.[cm]?[jt]sx?)?$/u;
 
@@ -29,7 +29,8 @@ export function toPosix(relativePath) {
 }
 
 export function fileKind(posixPath) {
-  if (TEST_FILE.test(posixPath)) return "test";
+  if (TEST_FILE.test(posixPath) || /(?:^|\/)tests\/.*\.rs$/u.test(posixPath))
+    return "test";
   if (/\.stories\.(?:svelte|[cm]?[jt]sx?)$/u.test(posixPath)) return "story";
   if (
     posixPath.startsWith("scripts/") ||
@@ -42,7 +43,10 @@ export function fileKind(posixPath) {
 
 export function isDumpPath(posixPath) {
   const parts = posixPath.split("/");
-  const base = (parts.at(-1) ?? "").replace(/\.(?:[cm]?[jt]sx?|svelte)$/u, "");
+  const base = (parts.at(-1) ?? "").replace(
+    /\.(?:[cm]?[jt]sx?|svelte|rs)$/u,
+    "",
+  );
   if (DUMP_NAMES.has(base)) return true;
   return parts.slice(0, -1).some((part) => DUMP_NAMES.has(part));
 }

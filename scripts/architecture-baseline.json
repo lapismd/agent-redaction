@@ -14,8 +14,8 @@
       "forbiddenImportCount": 0
     },
     "scripts/architecture-policy.mjs": {
-      "countedLines": 42,
-      "physicalLines": 52,
+      "countedLines": 46,
+      "physicalLines": 56,
       "forbiddenImportCount": 0
     },
     "scripts/architecture.test.mjs": {
@@ -24,8 +24,8 @@
       "forbiddenImportCount": 0
     },
     "scripts/check-architecture.mjs": {
-      "countedLines": 237,
-      "physicalLines": 259,
+      "countedLines": 238,
+      "physicalLines": 260,
       "forbiddenImportCount": 0
     },
     "scripts/check-boundaries.mjs": {
