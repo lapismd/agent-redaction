@@ -22,3 +22,5 @@
 | AR-GOV-004     | Implemented | pnpm check:format                                                                                                                                                        |
 | AR-GOV-005     | Implemented | README.md; public-export example compilation; package checks                                                                                                             |
 | AR-GOV-006     | Implemented | .github/workflows/publish-spec-pages.yml; mdbook build spec; actionlint                                                                                                  |
+| AR-NATIVE-001  | Implemented | crates/lapis-agent-redaction/tests/native_privacy.rs; spec/records/native-rust-extraction.md; jj-store transcript_sanitization compatibility                             |
+| AR-NATIVE-002  | Planned     | scripts/native-release.test.mjs; .github/workflows/qualify-native.yml; source qualification and public publication evidence pending                                      |

@@ -1,0 +1,72 @@
+name: Qualify or publish native crate
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Qualify without publication, or publish the approved immutable candidate
+        type: choice
+        options: [qualify, publish]
+        default: qualify
+        required: true
+      version:
+        description: Approved Cargo version (required for publication)
+        type: string
+      sha256:
+        description: Approved canonical Linux crate checksum (required for publication)
+        type: string
+      bootstrap:
+        description: Use protected first-crate bootstrap instead of trusted publishing
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: cargo-release
+  cancel-in-progress: false
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_BUILD_JOBS: 3
+jobs:
+  artifact:
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/qualify-native.yml
+    with:
+      runner: ubuntu-24.04
+  publish:
+    needs: artifact
+    if: inputs.mode == 'publish'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    environment: ${{ inputs.bootstrap && 'crates-io-bootstrap' || 'crates-io' }}
+    permissions:
+      contents: read
+      checks: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - uses: dtolnay/rust-toolchain@e2a55d2ffb04f378e9626c28d38b36d230d1e12f
+        with:
+          toolchain: 1.99.0
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6
+      - uses: actions/download-artifact@v8
+        with:
+          name: cargo-release-${{ github.sha }}-ubuntu-24.04
+          path: .local/cargo-release
+      - uses: rust-lang/crates-io-auth-action@c6f97d42243bad5fab37ca0427f495c86d5b1a18
+        if: ${{ !inputs.bootstrap }}
+        id: auth
+      - name: Publish once or verify existing matching identity
+        run: node scripts/native-release.mjs publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CARGO_REGISTRY_TOKEN: ${{ inputs.bootstrap && secrets.CARGO_REGISTRY_BOOTSTRAP_TOKEN || steps.auth.outputs.token }}
+          LAPIS_CARGO_RELEASE_APPROVED_SOURCE: ${{ vars.CARGO_APPROVED_SOURCE }}
+          LAPIS_CARGO_RELEASE_VERSION: ${{ inputs.version }}
+          LAPIS_CARGO_RELEASE_SHA256: ${{ inputs.sha256 }}
+      - name: Verify public bytes and isolated registry consumer
+        run: node scripts/native-release.mjs verify

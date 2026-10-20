@@ -22,6 +22,7 @@ import {
 const SKIP_DIRS = new Set([
   "node_modules",
   "dist",
+  "target",
   ".local",
   ".cache",
   ".git",
@@ -62,7 +63,7 @@ function walkSources(root) {
       if (isSourceFile(entry.name)) files.push(full);
     }
   };
-  for (const name of ["src", "scripts"]) visit(path.join(root, name));
+  for (const name of ["src", "scripts", "crates"]) visit(path.join(root, name));
   return files;
 }
 

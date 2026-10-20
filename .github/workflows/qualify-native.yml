@@ -1,0 +1,39 @@
+name: Qualify native package
+on:
+  workflow_call:
+    inputs:
+      runner:
+        type: string
+        required: true
+permissions:
+  contents: read
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_BUILD_JOBS: 3
+jobs:
+  native:
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - uses: dtolnay/rust-toolchain@e2a55d2ffb04f378e9626c28d38b36d230d1e12f
+        with:
+          toolchain: 1.99.0
+          components: rustfmt,clippy
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6
+      - run: node scripts/check-native-boundaries.mjs
+      - run: node scripts/dev-cargo.mjs fmt --all -- --check
+      - run: node scripts/dev-cargo.mjs clippy --workspace --all-targets --locked -- -D warnings
+      - run: node scripts/dev-cargo.mjs test --workspace --locked
+      - run: node scripts/native-release.mjs prepare
+      - uses: actions/upload-artifact@v7
+        with:
+          name: cargo-release-${{ github.sha }}-${{ inputs.runner }}
+          path: .local/cargo-release
+          if-no-files-found: error
+          retention-days: 14
