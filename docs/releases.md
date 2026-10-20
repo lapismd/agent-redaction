@@ -5,12 +5,20 @@ manual workflows and require operator approval for the reviewed source,
 versions, checksums and limitations. Ordinary CI creates no public package or
 tag. Native detector policy and the TypeScript policy remain separate.
 
-## Wave 2 candidates
+## Wave 2 published
 
-- Cargo: `lapis-agent-redaction@0.1.0`, first publication.
+- Cargo: `lapis-agent-redaction@0.1.0`, first publication, verified on crates.io.
 - npm: `@lapismd/agent-redaction@0.1.1`. The 0.1.0 registry archive's README,
   scripts and package-manager metadata differ from the native extraction.
   TypeScript runtime source and exports are unchanged.
+
+Both packages and GitHub releases are public at source
+`02a6b4926de335bee147017b56fcdac7cac314bd`. Immutable checksums, provenance,
+registry consumers, authentication recovery and bootstrap retirement are recorded
+in [the publication record](../spec/records/publication-2026-10-20.md). Cargo
+trusted OIDC authentication is qualified. Evidence-only follow-ups do not move
+these tags or authorize another upload; application adoption belongs to later
+consumer releases.
 
 The 2026-10-20 review found no open Dependabot PRs. npm audit reports zero
 findings; the Visual Delta exception does not apply here.

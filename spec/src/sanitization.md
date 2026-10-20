@@ -107,3 +107,12 @@ complete credential-shaped fixture is not stored as a literal in source. This
 preserves detector acceptance without a public source-scanning exception.
 Formatting that fixture preserves AR-NATIVE-001 and AR-NATIVE-002 unchanged;
 native qualification still runs both complete privacy regressions.
+
+The approved 2026-10-20 publications complete AR-NATIVE-002's public-byte and
+registry-consumer evidence. AR-NATIVE-001/002 and AR-PKG-001/002 remain unchanged:
+native and TypeScript policy stay independent, and source, checksum, approval,
+protected authentication and consumer gates remain required. The
+[publication record](../records/publication-2026-10-20.md) retains both packages'
+immutable source identities, failed attempts and recovery. Linux and macOS ARM64
+are qualified; other native platforms and downstream application adoption remain
+outside this library release. Evidence-only changes do not republish a package.
