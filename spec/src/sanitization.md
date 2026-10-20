@@ -105,3 +105,5 @@ release step after registry and consumer verification; source CI creates neither
 Native detector test credentials are synthetic and assembled at runtime; the
 complete credential-shaped fixture is not stored as a literal in source. This
 preserves detector acceptance without a public source-scanning exception.
+Formatting that fixture preserves AR-NATIVE-001 and AR-NATIVE-002 unchanged;
+native qualification still runs both complete privacy regressions.

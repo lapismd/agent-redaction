@@ -37,9 +37,7 @@ fn native_policy_preserves_canonical_bytes_detector_and_stream_boundaries() {
             .is_none()
     );
     let detector_fixture = format!("ghp_{}", "NQLObn7M3OTKBL44TH6K9WxFY39LZM1sDc0K");
-    let scanned = scope
-        .sanitize(json!({"token": detector_fixture}))
-        .unwrap();
+    let scanned = scope.sanitize(json!({"token": detector_fixture})).unwrap();
     assert_eq!(scanned.bytes(), br#"{"token":"[REDACTED]"}"#);
     for (raw, expected) in [
         ("🦀 /home/example/vault/note.md", "🦀 $WORKSPACE/note.md"),
