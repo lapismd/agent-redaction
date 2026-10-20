@@ -9,13 +9,16 @@ on:
         type: boolean
 permissions:
   contents: read
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_BUILD_JOBS: 3
 concurrency:
   group: npm-release
   cancel-in-progress: false
 jobs:
   artifact:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
         with:
@@ -28,6 +31,11 @@ jobs:
       - uses: taiki-e/install-action@v2
         with:
           tool: mdbook@0.5.4,deno@2.9.7
+      - uses: dtolnay/rust-toolchain@e2a55d2ffb04f378e9626c28d38b36d230d1e12f
+        with:
+          toolchain: 1.99.0
+          components: rustfmt,clippy
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6
       - name: Require the canonical main branch
         run: test "$GITHUB_REF" = refs/heads/main
       - run: pnpm install --frozen-lockfile --ignore-pnpmfile

@@ -52,7 +52,7 @@ export default defineConfig(tableRequirements(), {
       rules: [
         {
           pattern:
-            "^(?:\\.github/|scripts/npm-release\\.mjs$|crates/|Cargo\\.(?:toml|lock)$|rust-toolchain\\.toml$|vitest\\.config\\.ts$|src/|scripts/(?:check-boundaries|check-native-boundaries|dev-cargo)\\.mjs$|scripts/deno\\.test\\.ts$|docs/|package\\.json$|deno\\.json$)",
+            "^(?:\\.github/|scripts/(?:npm-release|native-release(?:-policy)?|native-consumer)\\.mjs$|crates/|Cargo\\.(?:toml|lock)$|rust-toolchain\\.toml$|vitest\\.config\\.ts$|src/|scripts/(?:check-boundaries|check-native-boundaries|dev-cargo)\\.mjs$|scripts/deno\\.test\\.ts$|docs/|package\\.json$|deno\\.json$)",
           chapters: ["spec/src/sanitization.md"],
         },
         {

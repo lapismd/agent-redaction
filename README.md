@@ -168,3 +168,9 @@ Deno, JJ or agent-runtime dependency; the TypeScript policy remains separate.
 
 Native checks use `pnpm check:native` and `pnpm test:native`, also included in the
 normal check/test lanes. Local source use does not publish the Cargo package.
+
+`pnpm release:native:prepare` verifies the Cargo archive, notices, dependency
+licenses and an isolated consumer with `serde_json/preserve_order` enabled.
+CI runs native gates on Linux and Apple Silicon macOS. See the
+[release procedure](docs/releases.md) for independent npm and Cargo approvals,
+first-crate bootstrap and immutable publication recovery.

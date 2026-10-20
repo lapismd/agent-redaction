@@ -24,7 +24,7 @@ runtime dependencies, so spec publication does not depend on npm release gates.
 | `AGENTS.md`, `spec-validator.config.mjs`, `spec/book.toml`, `.gitignore`, `.prettierrc.json`, `.prettierignore` | `spec-governance.md` |
 
 Release helpers, workflow files, and their package scripts map to sanitization
-and AR-PKG-002. Registry lockfile audit updates and the workspace override map
+and AR-PKG-002 / AR-NATIVE-002. Registry lockfile audit updates and the workspace override map
 to this governance chapter. The release checks retain all package assertions.
 
 Rust `crates/`, `Cargo.toml`, `Cargo.lock` and `rust-toolchain.toml` changes map to
@@ -32,3 +32,7 @@ Rust `crates/`, `Cargo.toml`, `Cargo.lock` and `rust-toolchain.toml` changes map
 
 The native privacy test configuration includes its dependency-boundary regressions
 without changing the existing TypeScript and architecture scenarios.
+
+Wave 2 reviews all open Dependabot proposals before source publication. No
+proposals were open on 2026-10-20; the frozen npm audit has zero findings. Native
+detector pins remain policy identities and are not upgraded as routine tooling.

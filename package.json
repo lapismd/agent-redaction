@@ -1,6 +1,6 @@
 {
   "name": "@lapismd/agent-redaction",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Portable fail-closed agent transcript sanitization",
   "type": "module",
   "license": "Apache-2.0",
@@ -40,13 +40,17 @@
     "test:deno": "deno test --allow-read --allow-env --allow-sys scripts/deno.test.ts",
     "spec:check": "spec-validator check",
     "publint": "publint",
-    "test:release": "node --test scripts/npm-release.test.mjs",
+    "test:release": "node --test scripts/npm-release.test.mjs scripts/native-release.test.mjs",
     "release:prepare": "pnpm build && pnpm publint && node scripts/npm-release.mjs prepare",
     "release:publish": "node scripts/npm-release.mjs publish",
     "release:verify": "node scripts/npm-release.mjs verify",
     "dev:cargo": "node scripts/dev-cargo.mjs",
     "check:native": "node scripts/check-native-boundaries.mjs && node scripts/dev-cargo.mjs fmt --all -- --check && node scripts/dev-cargo.mjs clippy --workspace --all-targets --locked -- -D warnings",
-    "test:native": "node scripts/dev-cargo.mjs test --workspace --locked"
+    "test:native": "node scripts/dev-cargo.mjs test --workspace --locked",
+    "release:native:prepare": "node scripts/native-release.mjs prepare",
+    "release:native:publish": "node scripts/native-release.mjs publish",
+    "release:native:verify": "node scripts/native-release.mjs verify",
+    "release:native:consumer": "node scripts/native-consumer.mjs archive"
   },
   "dependencies": {
     "@secretlint/core": "13.0.5",

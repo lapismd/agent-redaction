@@ -12,5 +12,5 @@ root/secret replacement step and must be followed by `sanitize`.
 
 Hosts admit cache locations and keep raw execution inputs separate. Failure
 returns omission or a fixed safe error. No publication or credential discovery
-is performed. Full policy and examples live in [the native guide](../../docs/native.md)
-and [canonical sanitization](../../spec/src/sanitization.md).
+is performed. Full policy and examples live in [the native guide](https://github.com/lapismd/agent-redaction/blob/main/docs/native.md)
+and [canonical sanitization](https://lapismd.github.io/agent-redaction/sanitization.html).
