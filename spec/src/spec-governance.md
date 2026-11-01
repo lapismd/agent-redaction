@@ -1,5 +1,9 @@
 # Specification governance
 
+Dependency automation's specification wrapper maps to sanitization alongside
+the existing release helpers. Trusted dependency-bot PRs use the PR-author
+exemption; ordinary PRs and functional checks retain their existing gates.
+
 ## Requirements
 
 The public README uses only declared package exports. The independent

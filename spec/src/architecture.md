@@ -1,5 +1,7 @@
 # Architecture
 
+CI audit recovery pins the patched transitive development/runtime packages required to clear the retained audit gate. Package-owned functional checks and publication gates remain required; no audit advisory is suppressed.
+
 Repository-owned source validation enforces counted-line budgets so modules
 stay extractable. Counted lines are physical lines minus blanks and
 comment-only lines, measured by `scripts/architecture-lines.mjs`. New
