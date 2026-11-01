@@ -38,7 +38,7 @@
     "test": "pnpm build && vitest run && pnpm test:native",
     "build": "tsc",
     "test:deno": "deno test --allow-read --allow-env --allow-sys scripts/deno.test.ts",
-    "spec:check": "spec-validator check",
+    "spec:check": "node scripts/dependency-automation/spec-policy.mjs check",
     "publint": "publint",
     "test:release": "node --test scripts/npm-release.test.mjs scripts/native-release.test.mjs",
     "release:prepare": "pnpm build && pnpm publint && node scripts/npm-release.mjs prepare",
