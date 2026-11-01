@@ -86,7 +86,7 @@
     "dotenv": "17.3.1"
   },
   "devDependencies": {
-    "@lapismd/spec-validator": "^0.1.0",
+    "@lapismd/spec-validator": "^0.2.0",
     "@types/node": "^24.0.0",
     "prettier": "3.3.3",
     "publint": "^0.3.12",
