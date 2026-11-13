@@ -50,7 +50,9 @@
     "release:native:prepare": "node scripts/native-release.mjs prepare",
     "release:native:publish": "node scripts/native-release.mjs publish",
     "release:native:verify": "node scripts/native-release.mjs verify",
-    "release:native:consumer": "node scripts/native-consumer.mjs archive"
+    "release:native:consumer": "node scripts/native-consumer.mjs archive",
+    "spec:search": "spec-validator search",
+    "spec:index": "spec-validator index"
   },
   "dependencies": {
     "@secretlint/core": "13.0.5",

@@ -120,3 +120,7 @@ protected authentication and consumer gates remain required. The
 immutable source identities, failed attempts and recovery. Linux and macOS ARM64
 are qualified; other native platforms and downstream application adoption remain
 outside this library release. Evidence-only changes do not republish a package.
+
+Specification validation uses the registry Node-only spec-validator 0.2
+development dependency. Its local search/index aliases and required book-check
+trigger do not change the sanitization runtime or detector contracts.

@@ -7,9 +7,6 @@ on:
       - "spec/**"
       - ".github/workflows/publish-spec-pages.yml"
   pull_request:
-    paths:
-      - "spec/**"
-      - ".github/workflows/publish-spec-pages.yml"
   workflow_dispatch:
 
 permissions:
