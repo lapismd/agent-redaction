@@ -50,7 +50,9 @@
     "release:native:prepare": "node scripts/native-release.mjs prepare",
     "release:native:publish": "node scripts/native-release.mjs publish",
     "release:native:verify": "node scripts/native-release.mjs verify",
-    "release:native:consumer": "node scripts/native-consumer.mjs archive"
+    "release:native:consumer": "node scripts/native-consumer.mjs archive",
+    "spec:search": "spec-validator search",
+    "spec:index": "spec-validator index"
   },
   "dependencies": {
     "@secretlint/core": "13.0.5",
@@ -86,7 +88,7 @@
     "dotenv": "17.3.1"
   },
   "devDependencies": {
-    "@lapismd/spec-validator": "^0.1.0",
+    "@lapismd/spec-validator": "^0.2.0",
     "@types/node": "^24.0.0",
     "prettier": "3.3.3",
     "publint": "^0.3.12",

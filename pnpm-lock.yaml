@@ -109,8 +109,8 @@ importers:
         version: 17.3.1
     devDependencies:
       '@lapismd/spec-validator':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: 0.2.0
       '@types/node':
         specifier: ^24.0.0
         version: 24.13.6
@@ -132,15 +132,10 @@ packages:
   '@jridgewell/sourcemap-codec@1.6.0':
     resolution: {integrity: sha512-T7jf+5zgsZHwNJ4lvQ7/aezbyk0nNX+zJVWpmHA7VYsEx7a7qr5Rg5IbtJFqkgze5Y2sruq1RUY8Q837Od7iFw==}
 
-  '@lapismd/spec-validator@0.1.0':
-    resolution: {integrity: sha512-LixMQdIgdh96K4nEq3G31cRa26zQ830SvhLSp1AFufhP6lc1AS6PTyc/bV6JhlN6NC94PtgmBOBeq0VJGhQCFA==}
-    engines: {deno: 2.9.5, node: '>=22'}
+  '@lapismd/spec-validator@0.2.0':
+    resolution: {integrity: sha512-fUMh7fpoZXuMRAc5Jdo+Y2sUhAPeO5o5R5AIdwKEs/xNLS2W3mSSHimscxI58JuUEFPPk/SI+jE0Vcvv7gXdlw==}
+    engines: {node: '>=22'}
     hasBin: true
-    peerDependencies:
-      '@tobilu/qmd': 2.5.3
-    peerDependenciesMeta:
-      '@tobilu/qmd':
-        optional: true
 
   '@oxc-project/types@0.156.0':
     resolution: {integrity: sha512-1Duyg48TdJNdyhEB8Xn1L36bT9Pv6GUtlKjHxOys8xkaF/rQq3XJE+bAurSK/AgIz5mGFsb77cn9Pb20+WCScw==}
@@ -746,7 +741,7 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.6.0': {}
 
-  '@lapismd/spec-validator@0.1.0':
+  '@lapismd/spec-validator@0.2.0':
     dependencies:
       jiti: 2.7.0
       typescript: 5.9.3
