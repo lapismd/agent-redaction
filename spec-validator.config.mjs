@@ -13,11 +13,13 @@ export default defineConfig(tableRequirements(), {
     verification: "AR-GOV-003",
     book: "AR-GOV-001",
     bookIgnore: "AR-GOV-001",
+    qmd: "AR-GOV-001",
     specFirst: "AR-GOV-002",
     internal: "AR-GOV-003",
   },
   validators: {
     summary: true,
+    qmd: { collection: "agent-redaction-spec" },
     governance: {
       extras: ["AGENTS.md", "README.md"],
       normative: true,

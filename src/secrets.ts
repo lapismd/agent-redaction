@@ -10,7 +10,8 @@ import {
 const markers = [REDACTED, EXTERNAL, "$WORKSPACE[", "$HOME", "$TMP"];
 export class SecretRegistry {
   #values = new Set<string>();
-  #variants: string[] = [];
+  #literalVariants = new Set<string>();
+  #uriVariants = new Set<string>();
   #valid = true;
   get valid(): boolean {
     return this.#valid;
@@ -35,23 +36,33 @@ export class SecretRegistry {
         LIMITS.secretBytes
       )
         throw 0;
-      const variants = new Set<string>();
+      const literalVariants = new Set<string>();
+      const uriVariants = new Set<string>();
       for (const value of next) {
+        const visible = stripTerminalControls(value);
+        if (
+          visible &&
+          markers.some((m) => m.includes(visible) || visible.includes(m))
+        )
+          throw 0;
+        if (visible) literalVariants.add(visible);
+        const uri = encodeURIComponent(value);
+        if (uri !== value) uriVariants.add(uri);
         const bytes = new TextEncoder().encode(value);
         let binary = "";
         for (const byte of bytes) binary += String.fromCharCode(byte);
         const encoded = btoa(binary);
         for (const candidate of [
           value,
-          encodeURIComponent(value),
           JSON.stringify(value).slice(1, -1),
           encoded,
           encoded.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""),
         ])
-          variants.add(candidate);
+          literalVariants.add(candidate);
       }
       this.#values = next;
-      this.#variants = [...variants].sort((a, b) => b.length - a.length);
+      this.#literalVariants = literalVariants;
+      this.#uriVariants = uriVariants;
       return true;
     } catch {
       this.clear();
@@ -61,23 +72,28 @@ export class SecretRegistry {
   }
   spans(text: string): Span[] {
     const spans: Span[] = [];
-    const uriNormalized = text.replace(/%[a-f0-9]{2}/gi, (match) =>
-      match.toUpperCase(),
-    );
-    for (const value of this.#variants) {
-      const source = /%[A-F0-9]{2}/.test(value) ? uriNormalized : text;
-      let start = source.indexOf(value);
-      while (start !== -1) {
-        spans.push({ start, end: start + value.length });
-        if (spans.length > LIMITS.text) throw 0;
-        start = source.indexOf(value, start + 1);
+    const uriNormalized = this.#uriVariants.size
+      ? text.replace(/%[a-f0-9]{2}/gi, (match) => match.toUpperCase())
+      : text;
+    for (const [source, variants] of [
+      [text, this.#literalVariants],
+      [uriNormalized, this.#uriVariants],
+    ] as const) {
+      for (const value of variants) {
+        let start = source.indexOf(value);
+        while (start !== -1) {
+          spans.push({ start, end: start + value.length });
+          if (spans.length > LIMITS.text) throw 0;
+          start = source.indexOf(value, start + 1);
+        }
       }
     }
     return spans;
   }
   clear(): void {
     this.#values.clear();
-    this.#variants = [];
+    this.#literalVariants.clear();
+    this.#uriVariants.clear();
   }
   dispose(): void {
     this.clear();
@@ -112,22 +128,37 @@ export function maskSpans(text: string, spans: readonly Span[]): string {
 }
 
 // These are context rules, not entropy detection. Public identifiers remain intact.
+const assignmentKeys =
+  "(?:password|passwd|secret|token|api[_-]?key|private[_-]?key|authorization|cookie)";
+const assignment = new RegExp(
+  String.raw`(?:(["'])${assignmentKeys}\1\s*[=:]\s*(?=["'])|\b${assignmentKeys}\s*[=:]\s*)(?:"(?<double>(?:\\[\s\S]|[^"\\])*\\?)(?:"|$)|'(?<single>(?:\\[\s\S]|[^'\\])*\\?)(?:'|$)|[^\s,;]+)`,
+  "dgi",
+);
 const patterns = [
   /-----BEGIN (?:[A-Z0-9 ]+ )?PRIVATE KEY-----[\s\S]*?(?:-----END (?:[A-Z0-9 ]+ )?PRIVATE KEY-----|$)/g,
   /\bnsec1[023456789acdefghjklmnpqrstuvwxyz]{20,}\b/gi,
   /\b(?:Bearer|Basic)\s+[^\s"'<>]+/gi,
-  /\b(?:password|passwd|secret|token|api[_-]?key|private[_-]?key|authorization|cookie)\s*[=:]\s*(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[^\s,;]+)/gi,
   /\b(?:bunker|nostrconnect):\/\/[^\s<>"']+/gi,
   /\b[a-z][a-z0-9+.-]*:\/\/[^\s/@:]+:[^\s/@]+@/gi,
   /[?&](?:access_token|refresh_token|api_key|token|secret|password)=[^&#\s"']+/gi,
 ];
 export function formatSpans(text: string): Span[] {
-  return patterns.flatMap((pattern) =>
+  const spans = patterns.flatMap((pattern) =>
     [...text.matchAll(pattern)].map((match) => ({
       start: match.index!,
       end: match.index! + match[0].length,
     })),
   );
+  for (const match of text.matchAll(assignment)) {
+    // Keep quoted keys and string delimiters intact in serialized records.
+    const [start, end] = (
+      match[1]
+        ? (match.indices!.groups!.double ?? match.indices!.groups!.single)
+        : match.indices![0]
+    )!;
+    if (start < end) spans.push({ start, end });
+  }
+  return spans;
 }
 export function sensitiveKey(key: string): boolean {
   return (

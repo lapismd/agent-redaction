@@ -23,3 +23,7 @@ are harness-only and stay outside TypeScript `include`.
 The Rust crate sources and integration tests use the same counted-line limits.
 Cargo build output is excluded. Native privacy is independent of the TypeScript
 adapters and does not alter their complete-block streaming contract.
+
+The line budgets account for separate literal and URI matching in the secret
+registry, range capture for quoted assignments, and credential checks at path
+projection and policy release boundaries.

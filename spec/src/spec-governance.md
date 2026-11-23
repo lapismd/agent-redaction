@@ -45,3 +45,6 @@ The required canonical-book check MUST be registered for dependency-only PRs
 as well as specification edits. Pull-request workflow triggers MUST NOT use
 path filters; trusted dependency-bot job exemptions remain based on PR author.
 Local `spec:search` and `spec:index` use the installed Node validator.
+The tracked QMD collection indexes only `spec/src` for local discovery. Its
+generated SQLite cache is ignored. The Node validator and its registry lockfile
+remain the source for the specification check lane.
