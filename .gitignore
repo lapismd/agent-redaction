@@ -4,3 +4,5 @@ spec/book/
 .local/
 coverage/
 target/
+
+.qmd/index.sqlite*

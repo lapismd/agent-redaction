@@ -41,6 +41,13 @@ contract without publishing npm artifacts or processing user capture data.
 Local `pnpm check` also runs Prettier formatting and counted-line architecture
 budgets; see [architecture.md](architecture.md).
 
+The portable text scanner MUST apply its existing credential assignment keys
+to matching single- or double-quoted keys with quoted string values. It masks
+the value content and preserves the delimiters of a complete quoted assignment.
+The same rule applies to serialized records inside string fields and completed
+stream blocks. An unfinished quoted credential value is masked through the end
+of the block. Compound field names remain part of structured-field matching.
+
 Known values are byte-sensitive strings, not a blanket entropy heuristic. Commit
 IDs and public keys are not credentials. Exact required protocol identifiers
 that would be transformed must be rejected by the publishing consumer. Native
@@ -51,6 +58,14 @@ Private portable output additionally permits `$HOME` and `$TMP`. These marker
 strings are reserved; a known value colliding with them invalidates the scope.
 No mapping is exported with the result. Encoded matching covers URI component,
 JSON-escaped, UTF-8 base64 and base64url representations, not arbitrary encodings.
+URI hex case folding applies only to URI-encoded variants. The visible form of a
+registered secret after terminal control removal MUST also be masked. An operation
+that overlaps secret registration or scope disposal MUST omit under
+`policy_invalid` if it would otherwise return a stale result.
+
+File URL traversal MUST be rejected before URL parsing can collapse dot segments.
+Path projections that change the representation MUST be scanned for credentials
+before delivery, including any decoded filename exposed through a logical path.
 
 Re-exporting a private portable view under public policy MUST remove `$HOME` and
 `$TMP` suffixes as well as original non-workspace roots. Synchronous boundaries

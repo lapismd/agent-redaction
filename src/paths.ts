@@ -10,6 +10,12 @@ interface Root {
 const safeId = /^[a-zA-Z0-9][a-zA-Z0-9._:-]{0,127}$/;
 function decodePath(value: string): string {
   if (/^file:\/\//i.test(value)) {
+    // URL parsing erases dot segments, so inspect the original first.
+    if (
+      /[\x00-\x1f]/.test(value) ||
+      traversal(value.replace(/\\/g, "/").replace(/%2e/gi, "."))
+    )
+      throw 0;
     const url = new URL(value);
     if (url.username || url.password || url.search || url.hash) throw 0;
     const decoded = decodeURIComponent(url.pathname);

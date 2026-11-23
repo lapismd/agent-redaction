@@ -69,8 +69,8 @@
       "forbiddenImportCount": 0
     },
     "src/paths.ts": {
-      "countedLines": 139,
-      "physicalLines": 143,
+      "countedLines": 144,
+      "physicalLines": 149,
       "forbiddenImportCount": 0
     },
     "src/sanitizer.test.ts": {
@@ -79,8 +79,8 @@
       "forbiddenImportCount": 0
     },
     "src/sanitizer.ts": {
-      "countedLines": 199,
-      "physicalLines": 201,
+      "countedLines": 225,
+      "physicalLines": 228,
       "forbiddenImportCount": 0
     },
     "src/secretlint.ts": {
@@ -89,8 +89,8 @@
       "forbiddenImportCount": 0
     },
     "src/secrets.ts": {
-      "countedLines": 141,
-      "physicalLines": 145,
+      "countedLines": 171,
+      "physicalLines": 176,
       "forbiddenImportCount": 0
     },
     "src/stream.ts": {
